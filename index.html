@@ -53,15 +53,18 @@
 </footer>
 
 <!-- Интро -->
-<template id="intro">
+<template id="intro" data-type="screen">
+  <div data-id="1">
   <section class="intro">
     <button class="intro__asterisk asterisk" type="button"><span class="visually-hidden">Продолжить</span>*</button>
     <p class="intro__motto"><sup>*</sup> Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.</p>
   </section>
+  </div>
 </template>
 
 <!-- Приветствие -->
-<template id="greeting">
+<template id="greeting" data-type="screen">
+  <div data-id="0"> 
   <section class="greeting central--blur">
     <img class="greeting__logo" src="img/logo_ph-big.svg" width="201" height="89" alt="Pixel Hunter">
     <div class="greeting__asterisk asterisk"><span class="visually-hidden">Я просто красивая звёздочка</span>*</div>
@@ -82,10 +85,12 @@
       </svg>
     </button>
   </section>
+  </div>
 </template>
 
 <!-- Правила игры -->
-<template id="rules">
+<template id="rules" data-type="screen">
+  <div data-id="2">
   <header class="header">
     <button class="back">
       <span class="visually-hidden">Вернуться к началу</span>
@@ -113,10 +118,12 @@
       <button class="rules__button  continue" type="submit" disabled>Go!</button>
     </form>
   </section>
+  </div>
 </template>
 
 <!-- Игровой экран с двумя изображениями -->
-<template id="game-1">
+<template id="game-1" data-type="screen">
+  <div data-id="3">
   <header class="header">
     <button class="back">
       <span class="visually-hidden">Вернуться к началу</span>
@@ -173,10 +180,12 @@
       <li class="stats__result stats__result--unknown"></li>
     </ul>
   </section>
+  </div>
 </template>
 
 <!-- Игровой экран с одним изображением -->
-<template id="game-2">
+<template id="game-2" data-type="screen">
+  <div data-id="4">
   <header class="header">
     <button class="back">
       <span class="visually-hidden">Вернуться к началу</span>
@@ -222,10 +231,12 @@
       <li class="stats__result stats__result--unknown"></li>
     </ul>
   </section>
+  </div>
 </template>
 
 <!-- Игровой экран с тремя изображениями -->
-<template id="game-3">
+<template id="game-3" data-type="screen">
+  <div data-id="5">
   <header class="header">
     <button class="back">
       <span class="visually-hidden">Вернуться к началу</span>
@@ -269,10 +280,12 @@
       <li class="stats__result stats__result--unknown"></li>
     </ul>
   </section>
+  </div>
 </template>
 
 <!-- Общая статистика по всем игрокам -->
-<template id="stats">
+<template id="stats" data-type="screen">
+  <div data-id="6">
   <header class="header">
     <button class="back">
       <span class="visually-hidden">Вернуться к началу</span>
@@ -384,20 +397,24 @@
       </tr>
     </table>
   </section>
+  </div>
 </template>
 
 <!-- Модальное окно с ошибкой -->
-<template id="modal-error">
+<template id="modal-error" data-type="screen">
+  <div data-id="7">
   <section class="modal">
     <div class="modal__inner">
       <h2 class="modal__title">Произошла ошибка!</h2>
       <p class="modal__text modal__text--error">Статус: 404. Пожалуйста, перезагрузите страницу.</p>
     </div>
   </section>
+  </div>
 </template>
 
 <!-- Модальное окно с подтверждением -->
-<template id="modal-confirm">
+<template id="modal-confirm" data-type="screen">
+  <div data-id="8">
   <section class="modal">
     <form class="modal__inner">
       <button class="modal__close" type="button">
@@ -411,7 +428,30 @@
       </div>
     </form>
   </section>
+  </div>
 </template>
+
+<template id="arrows">
+    <div class="arrows__wrap">
+        <style>
+          .arrows__wrap {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            margin-left: -56px;
+          }
+          .arrows__btn {
+            background: none;
+            border: 2px solid black;
+            padding: 5px 20px;
+          }
+        </style>
+        <button class="arrows__btn" data-button-type="left"><-</button>
+        <button class="arrows__btn" data-button-type="rigth">-></button>
+      </div>
+</template>
+
+<script src="js/main.js"></script>
 
 </body>
 </html>
