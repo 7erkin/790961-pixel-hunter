@@ -6,16 +6,32 @@ const KeyName = {
   RIGHT_ARROW: `ArrowRight`
 };
 const orderScreenById = [
-  `greeting`,
   `intro`,
+  `greeting`,
   `rules`,
   `game-1`,
   `game-2`,
   `game-3`,
   `stats`,
-  `modal-error`,
-  `modal-confirm`
 ];
+const arrowsHTML = `
+      <div class="arrows__wrap">
+        <style>
+          .arrows__wrap {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            margin-left: -56px;
+          }
+          .arrows__btn {
+            background: none;
+            border: 2px solid black;
+            padding: 5px 20px;
+          }
+        </style>
+        <button class="arrows__btn"><-</button>
+        <button class="arrows__btn">-></button>
+      </div>`;
 let buttonsArrowsNodes;
 let currentScreenId;
 let screensNodes;
@@ -67,23 +83,21 @@ let getButtonArrowKeyName = function (evt) {
   return node === buttonsArrowsNodes[0] ? KeyName.LEFT_ARROW : KeyName.RIGHT_ARROW;
 };
 
-let getButtonKeyName = function (evt) {
+let onPress = function (evt) {
+  evt.preventDefault();
   let match = Object.keys(KeyName).some((name) => {
     return KeyName[name] === evt.key;
   });
-  return match ? evt.key : undefined;
-};
-
-let getKeyName = function (evt) {
-  return evt.key === undefined ? getButtonArrowKeyName(evt) : getButtonKeyName(evt);
-};
-
-let onChangeScreen = function (evt) {
-  let keyName = getKeyName(evt);
-  if (keyName === undefined) {
-    return;
+  if (match) {
+    changeScreen(evt.key);
   }
-  changeScreen(keyName);
+};
+let onCLick = function (evt) {
+  evt.preventDefault();
+  let keyName = getButtonArrowKeyName(evt);
+  if (keyName !== undefined) {
+    changeScreen(keyName);
+  }
 };
 
 /** Удаляет текущий экран
@@ -115,8 +129,9 @@ let setScreenById = function (id) {
 /** Отрисовывает стрелки переключения на экран
   */
 let renderArrow = function () {
-  let templateButtonsArrowsNode = document.querySelector(`#arrows`).content.querySelector(`div`);
-  document.body.appendChild(templateButtonsArrowsNode.cloneNode(true));
+  const arrowsNode = document.createElement(`div`);
+  arrowsNode.innerHTML = arrowsHTML;
+  document.body.appendChild(arrowsNode);
 };
 
 /** Устанавливает страницу в начальное состояние
@@ -126,8 +141,8 @@ let initializePage = function () {
   setScreenById(0);
   renderArrow();
   buttonsArrowsNodes = getButtonsArrows();
-  document.querySelector(`.arrows__wrap`).addEventListener(`click`, onChangeScreen);
-  document.addEventListener(`keydown`, onChangeScreen);
+  document.querySelector(`.arrows__wrap`).addEventListener(`click`, onCLick);
+  document.addEventListener(`keydown`, onPress);
 };
 
 initializePage();
