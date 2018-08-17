@@ -1,4 +1,4 @@
-import {getElementFromTemplate, changeScreen} from './../lib/index';
+import {getElementFromTemplate, changeScreen} from '../lib/index';
 import greetingScreenNode from './greeting';
 
 const introNode = getElementFromTemplate(`  

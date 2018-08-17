@@ -1,4 +1,4 @@
-import {getElementFromTemplate, changeScreen, genEventBack} from './../lib/index';
+import {getElementFromTemplate, changeScreen, genEventBack} from '../lib/index';
 import game1Node from './game-1';
 
 const rulesNode = getElementFromTemplate(`  
@@ -33,13 +33,11 @@ const rulesNode = getElementFromTemplate(`
 
 const switcherNode = rulesNode.querySelector(`.rules__button`);
 const inputNode = rulesNode.querySelector(`.rules__input`);
-
-const setInitialCondition = function () {
+const setInitialCondition = () => {
   switcherNode.disabled = true;
   inputNode.value = ``;
 };
 
-setInitialCondition();
 inputNode.addEventListener(`input`, (evt) => {
   if (evt.target.value === ``) {
     switcherNode.disabled = true;
@@ -55,5 +53,7 @@ rulesNode.querySelector(`.back`).addEventListener(`click`, (evt) => {
   setInitialCondition();
   genEventBack(evt);
 });
+
+setInitialCondition();
 
 export default rulesNode;

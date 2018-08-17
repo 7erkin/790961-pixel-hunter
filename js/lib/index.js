@@ -1,19 +1,19 @@
 const rootNode = document.querySelector(`#main`);
 
-const renderScreen = function (screenNode) {
+const renderScreen = (screenNode) => {
   rootNode.innerHTML = ``;
   rootNode.appendChild(screenNode);
 };
-export const getElementFromTemplate = function (strTemplate) {
+export const getElementFromTemplate = (strTemplate) => {
   const node = document.createElement(`div`);
   node.innerHTML = strTemplate;
   return node;
 };
-export const changeScreen = function (screenNode) {
+export const changeScreen = (screenNode) => {
   rootNode.innerHTML = ``;
   renderScreen(screenNode);
 };
-export const genEventBack = function (evt) {
+export const genEventBack = (evt) => {
   evt.preventDefault();
   evt.stopPropagation();
   const event = new Event(`back`);

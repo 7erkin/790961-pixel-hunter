@@ -1,4 +1,4 @@
-import {getElementFromTemplate, changeScreen, genEventBack} from './../lib/index';
+import {getElementFromTemplate, changeScreen, genEventBack} from '../lib/index';
 import game3Node from './game-3';
 
 const game2Node = getElementFromTemplate(`  
@@ -50,12 +50,12 @@ const game2Node = getElementFromTemplate(`
 
 const gameContent = game2Node.querySelector(`.game__content`);
 const radioNodes = gameContent.querySelectorAll(`input[type="radio"]`);
-
-const setInitialCondition = function () {
+const setInitialCondition = () => {
   Array.prototype.forEach.call(radioNodes, (radioNode) => {
     radioNode.checked = false;
   });
 };
+
 gameContent.addEventListener(`click`, (evt) => {
   if (evt.target.type !== `radio`) {
     return;

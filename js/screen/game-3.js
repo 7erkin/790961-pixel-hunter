@@ -1,4 +1,4 @@
-import {getElementFromTemplate, changeScreen, genEventBack} from './../lib/index';
+import {getElementFromTemplate, changeScreen, genEventBack} from '../lib/index';
 import statsNode from './stats';
 
 const game3Node = getElementFromTemplate(`  

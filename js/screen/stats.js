@@ -1,4 +1,4 @@
-import {getElementFromTemplate, genEventBack} from './../lib/index';
+import {getElementFromTemplate, genEventBack} from '../lib/index';
 
 const statsNode = getElementFromTemplate(`  
 <header class="header">
