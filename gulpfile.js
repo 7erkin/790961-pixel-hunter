@@ -15,7 +15,7 @@ const sourcemaps = require(`gulp-sourcemaps`);
 const mocha = require(`gulp-mocha`);
 const commonjs = require(`rollup-plugin-commonjs`);
 
-gulp.task(`check`, () => {
+gulp.task(`test`, () => {
   return gulp.src([`js/**/*.test.js`])
   .pipe(rollup({
     plugins: [
@@ -124,7 +124,4 @@ gulp.task(`assemble`, [`clean`], () => {
 
 gulp.task(`build`, [`assemble`], () => {
   gulp.start(`imagemin`);
-});
-
-gulp.task(`test`, () => {
 });
