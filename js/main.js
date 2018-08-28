@@ -1,5 +1,9 @@
+import createScreen from './screen/intro';
 import {changeScreen} from './lib/index';
-import introScreenNode from './screen/intro';
 
-document.addEventListener(`back`, () => changeScreen(introScreenNode));
-changeScreen(introScreenNode);
+document.addEventListener(`back`, () => changeScreen({
+  nextScreen: createScreen
+}));
+changeScreen({
+  nextScreen: createScreen
+});

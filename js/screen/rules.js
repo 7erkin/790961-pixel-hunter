@@ -1,7 +1,8 @@
 import {getElementFromTemplate, changeScreen, genEventBack} from '../lib/index';
-import game1Node from './game-1';
+import createScreen from './game-1';
 
-const rulesNode = getElementFromTemplate(`  
+export default () => {
+  const rulesNode = getElementFromTemplate(`  
 <header class="header">
     <button class="back">
       <span class="visually-hidden">Вернуться к началу</span>
@@ -31,29 +32,29 @@ const rulesNode = getElementFromTemplate(`
   </section>`);
 
 
-const switcherNode = rulesNode.querySelector(`.rules__button`);
-const inputNode = rulesNode.querySelector(`.rules__input`);
-const setInitialCondition = () => {
-  switcherNode.disabled = true;
-  inputNode.value = ``;
-};
-
-inputNode.addEventListener(`input`, (evt) => {
-  if (evt.target.value === ``) {
+  const switcherNode = rulesNode.querySelector(`.rules__button`);
+  const inputNode = rulesNode.querySelector(`.rules__input`);
+  const setInitialCondition = () => {
     switcherNode.disabled = true;
-    return;
-  }
-  switcherNode.disabled = false;
-});
-switcherNode.addEventListener(`click`, () => {
-  setInitialCondition();
-  changeScreen(game1Node);
-});
-rulesNode.querySelector(`.back`).addEventListener(`click`, (evt) => {
-  setInitialCondition();
-  genEventBack(evt);
-});
+    inputNode.value = ``;
+  };
 
-setInitialCondition();
+  inputNode.addEventListener(`input`, (evt) => {
+    if (evt.target.value === ``) {
+      switcherNode.disabled = true;
+      return;
+    }
+    switcherNode.disabled = false;
+  });
+  switcherNode.addEventListener(`click`, () => {
+    changeScreen({
+      nextScreen: createScreen
+    });
+  });
+  rulesNode.querySelector(`.back`).addEventListener(`click`, (evt) => {
+    genEventBack(evt);
+  });
+  setInitialCondition();
 
-export default rulesNode;
+  return rulesNode;
+};

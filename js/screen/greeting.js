@@ -1,7 +1,8 @@
 import {getElementFromTemplate, changeScreen} from '../lib/index';
-import rulesNode from './rules';
+import createScreen from './rules';
 
-const greetingNode = getElementFromTemplate(`  
+export default () => {
+  const greetingNode = getElementFromTemplate(`  
 <section class="greeting central--blur">
     <img class="greeting__logo" src="img/logo_ph-big.svg" width="201" height="89" alt="Pixel Hunter">
     <div class="greeting__asterisk asterisk"><span class="visually-hidden">Я просто красивая звёздочка</span>*</div>
@@ -23,7 +24,9 @@ const greetingNode = getElementFromTemplate(`
     </button>
   </section>`);
 
-const switcherNode = greetingNode.querySelector(`.greeting__continue`);
-switcherNode.addEventListener(`click`, () => changeScreen(rulesNode));
-
-export default greetingNode;
+  const switcherNode = greetingNode.querySelector(`.greeting__continue`);
+  switcherNode.addEventListener(`click`, () => changeScreen({
+    nextScreen: createScreen
+  }));
+  return greetingNode;
+};
