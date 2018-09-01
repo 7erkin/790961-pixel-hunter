@@ -1,9 +1,9 @@
 import {getElementFromTemplate, genEventBack} from '../lib/index';
 import answers from '../data/answers';
-import getStats from '../template/get-stats';
+import getStats from '../template/game/get-stats';
 import gameState from '../data/state-of-game';
 
-const quantityGames = 10;
+const QUANTITY_GAMES = 10;
 const getQuantityCorrectAnswer = (data) => {
   return data.filter((element) => {
     return element === `correct`;
@@ -24,10 +24,13 @@ const getTotalScore = (data) => {
 </tr>`;
 };
 const isUserWin = (data) => {
-  return data.games === quantityGames;
+  return data.games === QUANTITY_GAMES;
 };
 const getAnswerScore = (score, win) => {
   return win ? score.correct : `FAIL`;
+};
+const getGameStatus = (win) => {
+  return win ? `WIN!` : `FAIL`;
 };
 const getBonusScore = (data) => {
   return `<tr>
@@ -92,7 +95,7 @@ export default () => {
     </button>
   </header>
   <section class="result">
-    <h2 class="result__title">Победа!</h2>
+    <h2 class="result__title">${getGameStatus(win)}</h2>
     <table class="result__table">
       <tr>
         <td class="result__number">1.</td>

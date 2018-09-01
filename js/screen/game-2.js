@@ -1,31 +1,25 @@
-import {changeScreen, genEventBack, handleAnswer} from '../lib/index';
+import {changeScreen, getQuestionForm, handleAnswer} from '../lib/index';
 import createScreen from './game-3';
 import dataGame from '../data/games';
 import gameState from '../data/state-of-game';
 import images from '../data/images';
 import answers from '../data/answers';
 import takeAwayLife from '../business-logic/control-player-life';
-import stat from './stats';
-import createGameScreenNode from '../template/main';
-
-const quantityQuestion = 1;
+import resultScreen from './stats';
+import startScreen from './intro';
+import Game2View from '../view/game-2';
 
 export default () => {
-  const game2Node = createGameScreenNode({
-    taskType: 1,
+  const view = new Game2View({
     gameState,
     dataGame,
-    quantityQuestion,
     answers
   });
-
-  const gameContent = game2Node.querySelector(`.game__content`);
-  gameContent.addEventListener(`click`, (evt) => {
-    if (evt.target.type !== `radio`) {
-      return;
-    }
+  const element = view.element;
+  view.onAnswer = () => {
+    const questionForm = getQuestionForm();
     const status = handleAnswer({
-      questionForm: game2Node.querySelector(`.game__content`),
+      questionForm,
       images,
       gameState,
       answers,
@@ -33,13 +27,12 @@ export default () => {
       taskType: 1
     });
     changeScreen({
-      endScreen: stat,
+      endScreen: resultScreen,
       nextScreen: createScreen
     }, status);
+  };
+  view.onBack = () => changeScreen({
+    nextScreen: startScreen
   });
-  game2Node.querySelector(`.back`).addEventListener(`click`, (evt) => {
-    genEventBack(evt);
-  });
-
-  return game2Node;
+  return element;
 };

@@ -1,8 +1,8 @@
-const quantityAnswer = 10;
-const timeBound1 = 25;
-const timeBound2 = 75;
-const lifeMax = 3;
-const score = {
+const QUANTITY_ANSWER = 10;
+const TIME_BOUND1 = 25;
+const TIME_BOUND2 = 75;
+const LIFE_MAX = 3;
+const Score = {
   RIGHT_ANSWER: 100,
   SLOW_ANSWER: -50,
   QUICK_ANSWER: 50,
@@ -24,7 +24,7 @@ const isProperArgumentsTypes = (answers, lifeLeft) => {
 };
 
 const isValidAnswersValue = (answers) => {
-  if (answers.length < quantityAnswer) {
+  if (answers.length < QUANTITY_ANSWER) {
     return false;
   }
   return !answers.some((answer) => {
@@ -39,7 +39,7 @@ const isValidAnswersValue = (answers) => {
   });
 };
 const isValidLifeValue = (lifeLeft) => {
-  return lifeLeft >= 0 && lifeLeft <= lifeMax && Math.round(lifeLeft) - lifeLeft === 0;
+  return lifeLeft >= 0 && lifeLeft <= LIFE_MAX && Math.round(lifeLeft) - lifeLeft === 0;
 };
 const isValidArgumentsValue = (answers, lifeLeft) => {
   return isValidAnswersValue(answers) && isValidLifeValue(lifeLeft);
@@ -49,19 +49,19 @@ const countAnswerScore = (answers) => {
     if (!answer.status) {
       return acc;
     }
-    acc += score.RIGHT_ANSWER;
-    if (answer.time <= timeBound1) {
-      acc += score.QUICK_ANSWER;
+    acc += Score.RIGHT_ANSWER;
+    if (answer.time <= TIME_BOUND1) {
+      acc += Score.QUICK_ANSWER;
       return acc;
     }
-    if (answer.time > timeBound2) {
-      acc += score.SLOW_ANSWER;
+    if (answer.time > TIME_BOUND2) {
+      acc += Score.SLOW_ANSWER;
     }
     return acc;
   }, 0);
 };
 const countLifeScore = (lifeLeft) => {
-  return lifeLeft * score.LIFE_LEFT;
+  return lifeLeft * Score.LIFE_LEFT;
 };
 
 export default (answers, lifeLeft) => {

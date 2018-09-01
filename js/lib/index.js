@@ -1,11 +1,11 @@
-const quantityGames = 10;
-const rootNode = document.querySelector(`#main`);
+const QUANTITY_GAMES = 10;
+const ROOT_NODE = document.querySelector(`#main`);
 
 const renderScreen = (screenNode) => {
-  rootNode.appendChild(screenNode);
+  ROOT_NODE.appendChild(screenNode);
 };
 const clearScreen = () => {
-  rootNode.innerHTML = ``;
+  ROOT_NODE.innerHTML = ``;
 };
 export const getElementFromTemplate = (strTemplate) => {
   const node = document.createElement(`div`);
@@ -48,7 +48,7 @@ export const areLifesEnd = (life) => {
   return life < 0;
 };
 export const isGameFinished = (gameState) => {
-  return gameState.games === quantityGames;
+  return gameState.games === QUANTITY_GAMES;
 };
 export const writeAnswer = (data, answer) => {
   data.answers[data.gameState.games] = answer;
@@ -81,3 +81,4 @@ export const isRadioButtonPressed = (evt) => {
 export const isImageClicked = (evt) => {
   return evt.target.localName === `img`;
 };
+export const getQuestionForm = () => ROOT_NODE.querySelector(`.game__content`);

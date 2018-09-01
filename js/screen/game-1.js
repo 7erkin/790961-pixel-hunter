@@ -1,57 +1,38 @@
-import {changeScreen, genEventBack, handleAnswer, isRadioButtonPressed} from '../lib/index';
+import {changeScreen, getQuestionForm, handleAnswer} from '../lib/index';
 import createScreen from './game-2';
 import dataGame from '../data/games';
 import gameState from '../data/state-of-game';
 import images from '../data/images';
 import answers from '../data/answers';
 import takeAwayLife from '../business-logic/control-player-life';
-import stat from './stats';
-import createGameScreenNode from '../template/main';
-
-const quantityQuestion = 2;
+import resultScreen from './stats';
+import Game1View from '../view/game-1';
+import startScreen from './intro';
 
 export default () => {
-  const game1Node = createGameScreenNode({
-    taskType: 1,
+  const view = new Game1View({
     gameState,
     dataGame,
-    quantityQuestion,
     answers
   });
-  const gameContent = game1Node.querySelector(`.game__content`);
-  const questionQuantity = gameContent.querySelectorAll(`.game__option`).length;
-  const radioNodes = gameContent.querySelectorAll(`input[type="radio"]`);
-  const isSwitchable = () => {
-    const answerQuantity = Array.prototype.reduce.call(radioNodes, (acc, radioNode) => {
-      if (radioNode.checked) {
-        ++acc;
-      }
-      return acc;
-    }, 0);
-    return answerQuantity === questionQuantity;
+  const screen = view.element;
+  view.onBack = () => changeScreen({
+    nextScreen: startScreen
+  });
+  view.onAnswer = () => {
+    const questionForm = getQuestionForm(screen);
+    const status = handleAnswer({
+      questionForm,
+      images,
+      gameState,
+      answers,
+      lifeModifier: takeAwayLife,
+      taskType: 1
+    });
+    changeScreen({
+      endScreen: resultScreen,
+      nextScreen: createScreen
+    }, status);
   };
-
-  gameContent.addEventListener(`click`, (evt) => {
-    if (!isRadioButtonPressed(evt)) {
-      return;
-    }
-    if (isSwitchable()) {
-      const status = handleAnswer({
-        questionForm: game1Node.querySelector(`.game__content`),
-        images,
-        gameState,
-        answers,
-        lifeModifier: takeAwayLife,
-        taskType: 1
-      });
-      changeScreen({
-        endScreen: stat,
-        nextScreen: createScreen
-      }, status);
-    }
-  });
-  game1Node.querySelector(`.back`).addEventListener(`click`, (evt) => {
-    genEventBack(evt);
-  });
-  return game1Node;
+  return screen;
 };

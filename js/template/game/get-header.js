@@ -1,9 +1,9 @@
-const maxLife = 3;
+const LIFE_MAX = 3;
 const getLifesStatus = (lifeLeft) => {
   return `${new Array(lifeLeft)
         .fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`)
         .join(``)}
-  ${new Array(maxLife - lifeLeft)
+  ${new Array(LIFE_MAX - lifeLeft)
             .fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="31" height="27">`)
             .join(``)}`;
 };
