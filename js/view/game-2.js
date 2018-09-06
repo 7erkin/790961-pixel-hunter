@@ -15,7 +15,8 @@ export default class Game2View extends GameAbstractView {
       if (evt.target.type !== `radio`) {
         return;
       }
-      this.onAnswer();
+      const questionContainer = this.element.querySelector(`.game__content`);
+      this.onAnswer(questionContainer);
     });
     this._element.querySelector(`.back`).addEventListener(`click`, this.onBack);
   }

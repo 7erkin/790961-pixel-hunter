@@ -20,12 +20,6 @@ export const changeScreen = (data, status) => {
   }
   renderScreen(data.nextScreen());
 };
-export const genEventBack = (evt) => {
-  evt.preventDefault();
-  evt.stopPropagation();
-  const event = new Event(`back`);
-  document.dispatchEvent(event);
-};
 const checkAnswerTask1 = (questionNode, images) => {
   const checkedRadioButton = Array.from(questionNode.querySelectorAll(`input`)).filter((radioButton) => {
     return radioButton.checked;
@@ -36,7 +30,7 @@ const checkAnswerTask1 = (questionNode, images) => {
   return images.get(answer).has(imageSrc);
 };
 export const isAnswerRightTask1 = (data) => {
-  const questionsNodes = data.questionForm.querySelectorAll(`.game__option`);
+  const questionsNodes = data.questionContainer.querySelectorAll(`.game__option`);
   return Array.from(questionsNodes).every((questionNode) => {
     return checkAnswerTask1(questionNode, data.images);
   });
@@ -81,4 +75,3 @@ export const isRadioButtonPressed = (evt) => {
 export const isImageClicked = (evt) => {
   return evt.target.localName === `img`;
 };
-export const getQuestionForm = () => ROOT_NODE.querySelector(`.game__content`);

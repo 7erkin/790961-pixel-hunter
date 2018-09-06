@@ -29,7 +29,8 @@ export default class Game1View extends GameAbstractView {
         return;
       }
       if (isSwitchable()) {
-        this.onAnswer();
+        const questionContainer = this.element.querySelector(`.game__content`);
+        this.onAnswer(questionContainer);
       }
     });
     this._element.querySelector(`.back`).addEventListener(`click`, this.onBack);

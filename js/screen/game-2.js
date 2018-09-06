@@ -1,4 +1,4 @@
-import {changeScreen, getQuestionForm, handleAnswer} from '../lib/index';
+import {changeScreen, handleAnswer} from '../lib/index';
 import createScreen from './game-3';
 import dataGame from '../data/games';
 import gameState from '../data/state-of-game';
@@ -16,10 +16,9 @@ export default () => {
     answers
   });
   const element = view.element;
-  view.onAnswer = () => {
-    const questionForm = getQuestionForm();
+  view.onAnswer = (questionContainer) => {
     const status = handleAnswer({
-      questionForm,
+      questionContainer,
       images,
       gameState,
       answers,
