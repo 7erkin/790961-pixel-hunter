@@ -19,9 +19,9 @@ export default () => {
   view.onBack = () => changeScreen({
     nextScreen: startScreen
   });
-  view.onAnswer = (questionContainer) => {
+  view.onAnswer = (nextAnswers) => {
     const status = handleAnswer({
-      questionContainer,
+      nextAnswers,
       images,
       gameState,
       answers,

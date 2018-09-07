@@ -20,24 +20,18 @@ export const changeScreen = (data, status) => {
   }
   renderScreen(data.nextScreen());
 };
-const checkAnswerTask1 = (questionNode, images) => {
-  const checkedRadioButton = Array.from(questionNode.querySelectorAll(`input`)).filter((radioButton) => {
-    return radioButton.checked;
-  });
-  const imageNode = questionNode.querySelector(`img`);
-  const answer = checkedRadioButton[0].value;
-  const imageSrc = imageNode.src;
-  return images.get(answer).has(imageSrc);
-};
 export const isAnswerRightTask1 = (data) => {
-  const questionsNodes = data.questionContainer.querySelectorAll(`.game__option`);
-  return Array.from(questionsNodes).every((questionNode) => {
-    return checkAnswerTask1(questionNode, data.images);
+  return data.nextAnswers.every((element) => {
+    return data.images.get(element.answer).has(element.source);
   });
 };
 export const isAnswerRightTask2 = (data) => {
-  return data.images.get(`paint`).has(data.choosenImage.src);
+  return data.images.get(`paint`).has(data.choosenImage);
 };
+const typeAnswerToCheckFunction = new Map([
+  [1, isAnswerRightTask1],
+  [2, isAnswerRightTask2]
+]);
 export const areLifesEnd = (life) => {
   return life < 0;
 };
@@ -48,7 +42,7 @@ export const writeAnswer = (data, answer) => {
   data.answers[data.gameState.games] = answer;
 };
 export const handleAnswer = (data) => {
-  const isAnswerRight = someMap.get(data.taskType);
+  const isAnswerRight = typeAnswerToCheckFunction.get(data.taskType);
   if (isAnswerRight(data)) {
     writeAnswer(data, `correct`);
   } else {
@@ -65,10 +59,6 @@ export const handleAnswer = (data) => {
   }
   return 0;
 };
-const someMap = new Map([
-  [1, isAnswerRightTask1],
-  [2, isAnswerRightTask2]
-]);
 export const isRadioButtonPressed = (evt) => {
   return evt.target.type === `radio`;
 };

@@ -14,7 +14,7 @@ export default class Game3View extends AbstractView {
     const gameContent = this._element.querySelector(`.game__content`);
     gameContent.addEventListener(`click`, (evt) => {
       if (isImageClicked(evt)) {
-        this.onAnswer(evt.target);
+        this.onAnswer(evt.target.src);
       }
     });
     this._element.querySelector(`.back`).addEventListener(`click`, this.onBack);

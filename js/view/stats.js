@@ -18,21 +18,21 @@ const getBonusScore = (data) => {
           <td></td>
           <td class="result__extra">Бонус за скорость:</td>
           <td class="result__extra">${data.Stat.fast} <span class="stats__result stats__result--fast"></span></td>
-          <td class="result__Points">× ${data.Point.fast}</td>
+          <td class="result__Points">× ${data.Point.FAST}</td>
           <td class="result__total">${data.Score.fast}</td>
         </tr>
         <tr>
           <td></td>
           <td class="result__extra">Бонус за жизни:</td>
           <td class="result__extra">${data.Stat.life} <span class="stats__result stats__result--alive"></span></td>
-          <td class="result__Points">× ${data.Point.life}</td>
+          <td class="result__Points">× ${data.Point.LIFE}</td>
           <td class="result__total">${data.Score.life}</td>
         </tr>
         <tr>
           <td></td>
           <td class="result__extra">Штраф за медлительность:</td>
           <td class="result__extra">${data.Stat.slow} <span class="stats__result stats__result--slow"></span></td>
-          <td class="result__Points">× ${data.Point.slow}</td>
+          <td class="result__Points">× ${data.Point.SLOW}</td>
           <td class="result__total">${data.Score.slow}</td>
         </tr>`;
 };
@@ -64,10 +64,10 @@ const isUserWin = (data) => {
 };
 
 const Point = {
-  correct: 100,
-  fast: 50,
-  slow: -50,
-  life: 50
+  CORRECT: 100,
+  FAST: 50,
+  SLOW: -50,
+  LIFE: 50
 };
 
 export default class StatsView extends AbstractView {
@@ -80,10 +80,10 @@ export default class StatsView extends AbstractView {
       life: gameState.life
     };
     const Score = {
-      correct: Stat.correct * Point.correct,
-      fast: Stat.fast * Point.fast,
-      slow: Stat.slow * Point.slow,
-      life: Stat.life * Point.life
+      correct: Stat.correct * Point.CORRECT,
+      fast: Stat.fast * Point.FAST,
+      slow: Stat.slow * Point.SLOW,
+      life: Stat.life * Point.LIFE
     };
     return `  
         <header class="header">

@@ -16,12 +16,12 @@ export default () => {
     answers
   });
   const element = view.element;
-  view.onAnswer = (imageNode) => {
+  view.onAnswer = (imageSource) => {
     const status = handleAnswer({
       images,
       answers,
       gameState,
-      choosenImage: imageNode,
+      choosenImage: imageSource,
       lifeModifier: takeAwayLife,
       taskType: 2
     });

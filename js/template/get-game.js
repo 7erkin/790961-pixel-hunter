@@ -4,13 +4,13 @@ import getTask1 from './game/get-task-1';
 import getTask2 from './game/get-task-2';
 import getStats from './game/get-stats';
 
-const moduleMap = new Map([
+const typeTaskToGetterTaskFunction = new Map([
   [1, getTask1],
   [2, getTask2]
 ]);
 
 export default (data) => {
-  const getTasks = moduleMap.get(data.taskType);
+  const getTasks = typeTaskToGetterTaskFunction.get(data.taskType);
   return `
     ${getHeader(data.gameState)}
     <section class="game">

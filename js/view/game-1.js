@@ -10,6 +10,20 @@ export default class Game1View extends GameAbstractView {
   }
   onAnswer() {}
   onBack() {}
+  get answers() {
+    const questionContainer = this.element.querySelector(`.game__content`);
+    const questionsNodes = questionContainer.querySelectorAll(`.game__option`);
+    return Array.from(questionsNodes).map((questionNode) => {
+      const imageSource = questionNode.querySelector(`img`).src;
+      const checkedRadioButton = Array.from(questionNode.querySelectorAll(`input`)).filter((radioButton) => {
+        return radioButton.checked;
+      });
+      return {
+        source: imageSource,
+        answer: checkedRadioButton[0].value
+      };
+    });
+  }
   bind() {
     const gameContent = this._element.querySelector(`.game__content`);
     const questionQuantity = gameContent.querySelectorAll(`.game__option`).length;
@@ -23,14 +37,13 @@ export default class Game1View extends GameAbstractView {
       }, 0);
       return answerQuantity === questionQuantity;
     };
-
     gameContent.addEventListener(`click`, (evt) => {
       if (!isRadioButtonPressed(evt)) {
         return;
       }
       if (isSwitchable()) {
-        const questionContainer = this.element.querySelector(`.game__content`);
-        this.onAnswer(questionContainer);
+        const newAnswers = this.answers;
+        this.onAnswer(newAnswers);
       }
     });
     this._element.querySelector(`.back`).addEventListener(`click`, this.onBack);

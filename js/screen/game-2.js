@@ -16,9 +16,9 @@ export default () => {
     answers
   });
   const element = view.element;
-  view.onAnswer = (questionContainer) => {
+  view.onAnswer = (nextAnswers) => {
     const status = handleAnswer({
-      questionContainer,
+      nextAnswers,
       images,
       gameState,
       answers,
