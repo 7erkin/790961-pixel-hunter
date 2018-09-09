@@ -4,9 +4,13 @@ import getGameTemplate from '../../template/get-game';
 export default class GameAbstractView extends AbstractView {
   constructor(data) {
     super();
-    this._data = data;
+    this.data = data;
+  }
+  updateTime(time) {
+    const timerNode = this.element.querySelector(`.game__timer`);
+    timerNode.innerHTML = time;
   }
   get template() {
-    return getGameTemplate(this._data);
+    return getGameTemplate(this.data);
   }
 }

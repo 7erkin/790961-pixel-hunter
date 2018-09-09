@@ -4,9 +4,9 @@ import {isImageClicked} from '../lib/index';
 export default class Game3View extends AbstractView {
   constructor(data) {
     super(data);
-    this._data.quantityTasks = 3;
-    this._data.taskType = 2;
-    this._data.gameName = `game-3`;
+    this.data.quantityTasks = 3;
+    this.data.taskType = 2;
+    this.data.gameName = `game-3`;
   }
   onAnswer() {}
   onBack() {}

@@ -1,9 +1,11 @@
 import AbstractView from './abstract/base';
 import getStats from '../template/game/get-stats';
-import answers from '../data/answers';
-import gameState from '../data/state-of-game';
 
 const QUANTITY_GAMES = 10;
+const TimeLimit = {
+  FAST: 10,
+  SLOW: 20
+};
 
 const getTotalScore = (data) => {
   return `<tr>
@@ -39,7 +41,7 @@ const getBonusScore = (data) => {
 const getGameStatus = (win) => {
   return win ? `WIN!` : `FAIL`;
 };
-const getAnswerScore = (Score, win) => {
+const getGameStateScore = (Score, win) => {
   return win ? Score.correct : `FAIL`;
 };
 const getGameResult = (data) => {
@@ -50,17 +52,21 @@ const getGameResult = (data) => {
 };
 const getQuantityCorrectAnswer = (data) => {
   return data.filter((element) => {
-    return element === `correct`;
+    return element.status === `correct`;
   }).length;
 };
-const getQuantityFastAnswer = () => {
-  return 0;
+const getQuantityFastAnswer = (answers) => {
+  return answers.filter((answer) => {
+    return answer.status === `correct` && answer.time <= TimeLimit.FAST;
+  }).length;
 };
-const getQuantitySlowAnswer = () => {
-  return 0;
+const getQuantitySlowAnswer = (answers) => {
+  return answers.filter((answer) => {
+    return answer.status === `correct` && answer.time > TimeLimit.SLOW;
+  }).length;
 };
-const isUserWin = (data) => {
-  return data.games === QUANTITY_GAMES;
+const isUserWin = (games) => {
+  return games === QUANTITY_GAMES;
 };
 
 const Point = {
@@ -71,13 +77,17 @@ const Point = {
 };
 
 export default class StatsView extends AbstractView {
+  constructor(model) {
+    super();
+    this.data = model;
+  }
   get template() {
-    const win = isUserWin(gameState);
+    const win = isUserWin(this.data.gameState.games);
     const Stat = {
-      correct: getQuantityCorrectAnswer(answers),
-      fast: getQuantityFastAnswer(),
-      slow: getQuantitySlowAnswer(),
-      life: gameState.life
+      correct: getQuantityCorrectAnswer(this.data.gameState.answers),
+      fast: getQuantityFastAnswer(this.data.gameState.answers),
+      slow: getQuantitySlowAnswer(this.data.gameState.answers),
+      life: this.data.gameState.life
     };
     const Score = {
       correct: Stat.correct * Point.CORRECT,
@@ -103,10 +113,10 @@ export default class StatsView extends AbstractView {
               <tr>
                 <td class="result__number">1.</td>
                 <td colspan="2">
-                  ${getStats(answers)}
+                  ${getStats(this.data.gameState.answers)}
                 </td>
                 <td class="result__Points">× 100</td>
-                <td class="result__total">${getAnswerScore(Score, win)}</td>
+                <td class="result__total">${getGameStateScore(Score, win)}</td>
               </tr>
               ${getGameResult({Score, Stat, Point, win})}
             </table>
