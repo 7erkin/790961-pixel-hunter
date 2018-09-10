@@ -1,24 +1,44 @@
-import images from '../../data/images';
+import questionStorage from '../../data/question-storage';
+import {QuestionType, AnswerType, ImageType} from '../../lib/index';
 
 const isAnswerRightTask1 = (data) => {
-  return data.answers.every((element) => {
-    return images.get(element.answer).has(element.source);
+  const answers = data.answers;
+  const question = data.question;
+  return answers.every((answer) => {
+    return question.answers.some((element) => {
+      return element.image.url === answer.source && element.type === answer.answer;
+    });
   });
 };
+const getProperType = (question) => {
+  const quantity = question.answers.reduce((acc, answer) => {
+    if (answer.type === ImageType.PHOTO) {
+      ++acc;
+    }
+    return acc;
+  }, 0);
+  return quantity === 1 ? ImageType.PHOTO : ImageType.PAINT;
+};
 const isAnswerRightTask2 = (data) => {
-  return images.get(`paint`).has(data.answers);
+  const answer = data.answers;
+  const question = data.question;
+  const type = getProperType(question);
+  return question.answers.some((element) => {
+    return element.image.url === answer && element.type === type;
+  });
 };
 const typeAnswerToCheckFunction = new Map([
-  [1, isAnswerRightTask1],
-  [2, isAnswerRightTask2]
+  [QuestionType.TWO_OF_TWO, isAnswerRightTask1],
+  [QuestionType.TINDER_LIKE, isAnswerRightTask1],
+  [QuestionType.ONE_OF_THREE, isAnswerRightTask2]
 ]);
 const handleAnswer = (data) => {
   const isAnswerRight = typeAnswerToCheckFunction.get(data.typeGame);
   if (isAnswerRight(data)) {
-    data.model.setAnswer(`correct`);
+    data.model.setAnswer(AnswerType.CORRECT);
     return;
   }
-  data.model.setAnswer(`wrong`);
+  data.model.setAnswer(AnswerType.WRONG);
 };
 
 const EventName = {
@@ -33,7 +53,8 @@ const EventName = {
 
 export default class GameScreen {
   constructor(View, callback, model, typeGame) {
-    this.view = new View(model);
+    this.question = questionStorage.getQuestionByType(typeGame);
+    this.view = new View(model, this.question);
     this.model = model;
     this.callback = callback;
     this.typeGame = typeGame;
@@ -47,6 +68,7 @@ export default class GameScreen {
     this.view.onAnswer = (answers) => {
       handleAnswer({
         answers,
+        question: this.question,
         model: this.model,
         typeGame: this.typeGame
       });

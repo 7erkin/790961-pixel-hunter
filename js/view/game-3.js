@@ -2,11 +2,11 @@ import AbstractView from "./abstract/game";
 import {isImageClicked} from '../lib/index';
 
 export default class Game3View extends AbstractView {
-  constructor(data) {
-    super(data);
-    this.data.quantityTasks = 3;
-    this.data.taskType = 2;
-    this.data.gameName = `game-3`;
+  constructor(model, question) {
+    super(model, question);
+    // this.data.quantityTasks = 3;
+    // this.data.taskType = 2;
+    // this.data.gameName = `game-3`;
   }
   onAnswer() {}
   onBack() {}

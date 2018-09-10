@@ -1,3 +1,3 @@
-export default (data, gameName) => {
-  return `<p class="game__task">${data.get(gameName)}</p>`;
+export default (data) => {
+  return `<p class="game__task">${data.question}</p>`;
 };

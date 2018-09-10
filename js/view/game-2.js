@@ -1,11 +1,11 @@
 import GameAbstractView from './abstract/game';
 
 export default class Game2View extends GameAbstractView {
-  constructor(data) {
-    super(data);
-    this.data.quantityTasks = 1;
-    this.data.taskType = 1;
-    this.data.gameName = `game-2`;
+  constructor(model, question) {
+    super(model, question);
+    // this.data.quantityTasks = 1;
+    // this.data.taskType = 1;
+    // this.data.gameName = `game-2`;
   }
   get answers() {
     const questionContainer = this.element.querySelector(`.game__content`);

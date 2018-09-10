@@ -8,7 +8,7 @@ const getLifesStatus = (lifeLeft) => {
             .join(``)}`;
 };
 
-export default (data) => {
+export default (gameState) => {
   return `
     <header class="header">
         <button class="back">
@@ -20,9 +20,9 @@ export default (data) => {
             <use xlink:href="img/sprite.svg#logo-small"></use>
         </svg>
         </button>
-        <div class="game__timer">${data.gameState.time}</div>
+        <div class="game__timer">${gameState.time}</div>
         <div class="game__lives">
-            ${getLifesStatus(data.gameState.life)}
+            ${getLifesStatus(gameState.life)}
         </div>
     </header>`;
 };

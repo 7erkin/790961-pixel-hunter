@@ -79,6 +79,7 @@ class GameModel {
   flushListeners() {
     clearSet(this.listeners.get(GameEventName.NEXT_GAME));
     clearSet(this.listeners.get(GameEventName.END_GAME));
+    clearSet(this.listeners.get(GameEventName.TIME_CHANGE));
   }
   flushGame() {
     this.gameState = deepCopy(state);

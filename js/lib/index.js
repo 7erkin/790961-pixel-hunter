@@ -21,3 +21,18 @@ export const isRadioButtonPressed = (evt) => {
 export const isImageClicked = (evt) => {
   return evt.target.localName === `img`;
 };
+export const QuestionType = {
+  TWO_OF_TWO: `two-of-two`,
+  TINDER_LIKE: `tinder-like`,
+  ONE_OF_THREE: `one-of-three`
+};
+export const ImageType = {
+  PAINT: `paint`,
+  PHOTO: `photo`
+};
+export const AnswerType = {
+  CORRECT: `correct`,
+  SLOW: `slow`,
+  FAST: `fast`,
+  WRONG: `wrong`
+};
