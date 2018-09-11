@@ -4,9 +4,6 @@ import {isRadioButtonPressed} from '../lib/index';
 export default class Game1View extends GameAbstractView {
   constructor(model, question) {
     super(model, question);
-    // this.data.quantityTasks = 2;
-    // this.data.taskType = 1;
-    // this.data.gameName = `game-1`;
   }
   onAnswer() {}
   onBack() {}

@@ -7,8 +7,21 @@ import Game3Screen from './presenter/game-3';
 import StatsScreen from './presenter/stats';
 import {changeScreen} from './lib/index';
 import GameModel from './model/game';
+import questionStorage from './data/question-storage';
+
+const URL = `https://es.dump.academy/pixel-hunter/questions`;
 
 export default class Application {
+  static init() {
+    fetch(URL).
+      then((response) => {
+        return response.json();
+      }).
+      then((response) => {
+        questionStorage.init(response);
+        Application.showIntro();
+      });
+  }
   static showIntro() {
     const intro = new IntroScreen(Application.showGreeting);
     intro.init();
