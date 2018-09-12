@@ -1,7 +1,7 @@
-import AbstractView from './base';
+import AbstractViewBackExtendtion from './base-back-extendtion';
 import getGameTemplate from '../../template/get-game';
 
-export default class GameAbstractView extends AbstractView {
+export default class GameAbstractView extends AbstractViewBackExtendtion {
   constructor(model, question) {
     super();
     this.model = model;

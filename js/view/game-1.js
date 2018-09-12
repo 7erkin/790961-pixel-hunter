@@ -6,7 +6,6 @@ export default class Game1View extends GameAbstractView {
     super(model, question);
   }
   onAnswer() {}
-  onBack() {}
   get answers() {
     const questionContainer = this.element.querySelector(`.game__content`);
     const questionsNodes = questionContainer.querySelectorAll(`.game__option`);
@@ -43,6 +42,6 @@ export default class Game1View extends GameAbstractView {
         this.onAnswer(newAnswers);
       }
     });
-    this._element.querySelector(`.back`).addEventListener(`click`, this.onBack);
+    this.bindBack();
   }
 }

@@ -51,7 +51,7 @@ export default class RulesView extends AbstractView {
     });
     switcherNode.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      this.onClick();
+      this.onClick(inputNode.value);
     });
     this._element.querySelector(`.back`).addEventListener(`click`, this.onBack);
     setInitialCondition();

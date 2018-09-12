@@ -1,12 +1,11 @@
-import AbstractView from "./abstract/game";
+import AbstractViewBackExtendtion from "./abstract/game";
 import {isImageClicked} from '../lib/index';
 
-export default class Game3View extends AbstractView {
+export default class Game3View extends AbstractViewBackExtendtion {
   constructor(model, question) {
     super(model, question);
   }
   onAnswer() {}
-  onBack() {}
   bind() {
     const gameContent = this._element.querySelector(`.game__content`);
     gameContent.addEventListener(`click`, (evt) => {
@@ -14,6 +13,6 @@ export default class Game3View extends AbstractView {
         this.onAnswer(evt.target.src);
       }
     });
-    this._element.querySelector(`.back`).addEventListener(`click`, this.onBack);
+    this.bindBack();
   }
 }

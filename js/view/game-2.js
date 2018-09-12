@@ -19,7 +19,6 @@ export default class Game2View extends GameAbstractView {
     });
   }
   onAnswer() {}
-  onBack() {}
   bind() {
     const gameContent = this._element.querySelector(`.game__content`);
     gameContent.addEventListener(`click`, (evt) => {
@@ -28,6 +27,6 @@ export default class Game2View extends GameAbstractView {
       }
       this.onAnswer(this.answers);
     });
-    this._element.querySelector(`.back`).addEventListener(`click`, this.onBack);
+    this.bindBack();
   }
 }

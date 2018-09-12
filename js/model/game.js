@@ -17,7 +17,7 @@ const takeAwayLife = (gameState) => {
   --gameState.life;
 };
 const areLifesEnd = (life) => {
-  return life < 0;
+  return life === 0;
 };
 const isGameFinished = (games) => {
   return games === QUANTITY_GAMES;
@@ -63,11 +63,11 @@ class GameModel {
       time: this.timer.time
     };
     if (answerStatus !== AnswerStatus.CORRECT) {
-      takeAwayLife(this.gameState);
       if (areLifesEnd(this.gameState.life)) {
         notifyAll(this.listeners.get(GameEventName.END_GAME));
         return;
       }
+      takeAwayLife(this.gameState);
     }
     addGame(this.gameState);
     if (isGameFinished(this.gameState.games)) {

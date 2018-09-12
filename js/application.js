@@ -6,14 +6,19 @@ import Game2Screen from './presenter/game-2';
 import Game3Screen from './presenter/game-3';
 import StatsScreen from './presenter/stats';
 import {changeScreen} from './lib/index';
-import GameModel from './model/game';
+import gameModel from './model/game';
 import questionStorage from './data/question-storage';
+import errorLoad from './view/error-load';
 
-const URL = `https://es.dump.academy/pixel-hunter/questions`;
+const Url = {
+  GET_QUESTIONS: `https://es.dump.academy/pixel-hunter/questions`,
+  SEND_RESULT: `https://es.dump.academy/pixel-hunter/stats/101184439300-`,
+  GET_STATS: `https://es.dump.academy/pixel-hunter/stats/101184439300-`
+};
 
 export default class Application {
   static init() {
-    fetch(URL).
+    fetch(Url.GET_QUESTIONS).
       then((response) => {
         return response.json();
       }).
@@ -36,7 +41,7 @@ export default class Application {
     const rules = new RulesScreen({
       showGame: Application.showGame1,
       showIntro: Application.showIntro
-    }, GameModel);
+    }, gameModel);
     rules.init();
     changeScreen(rules.element);
   }
@@ -45,7 +50,7 @@ export default class Application {
       showNextGame: Application.showGame2,
       showStats: Application.showStats,
       showIntro: Application.showIntro
-    }, GameModel);
+    }, gameModel);
     game.init();
     changeScreen(game.element);
   }
@@ -54,7 +59,7 @@ export default class Application {
       showNextGame: Application.showGame3,
       showStats: Application.showStats,
       showIntro: Application.showIntro
-    }, GameModel);
+    }, gameModel);
     game.init();
     changeScreen(game.element);
   }
@@ -63,13 +68,36 @@ export default class Application {
       showNextGame: Application.showGame1,
       showStats: Application.showStats,
       showIntro: Application.showIntro
-    }, GameModel);
+    }, gameModel);
     game.init();
     changeScreen(game.element);
   }
   static showStats() {
-    const stats = new StatsScreen(GameModel);
-    stats.init();
-    changeScreen(stats.element);
+    fetch(Url.SEND_RESULT + gameModel.gameState.userName, {
+      method: `POST`,
+      headers: {
+        'Content-Type': `application/json`
+      },
+      body: JSON.stringify({
+        answers: gameModel.gameState.answers,
+        life: gameModel.gameState.life
+      })
+    }).
+      then(() => {
+        return fetch(Url.GET_STATS + gameModel.gameState.userName);
+      }).
+      then((response) => {
+        return response.json();
+      }).
+      then((response) => {
+        const stats = new StatsScreen({
+          showIntro: Application.showIntro
+        }, gameModel, response);
+        stats.init();
+        changeScreen(stats.element);
+      }).
+      catch(() => {
+        changeScreen(errorLoad.element);
+      });
   }
 }

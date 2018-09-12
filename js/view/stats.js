@@ -1,19 +1,26 @@
-import AbstractView from './abstract/base';
+import AbstractViewBackExtendtion from './abstract/base-back-extendtion';
 import getStats from '../template/game/get-stats';
 
-const QUANTITY_GAMES = 10;
 const TimeLimit = {
   FAST: 10,
   SLOW: 20
 };
 
-const getTotalScore = (data) => {
+const computeScore = (score) => Object.keys(score).reduce((acc, key) => {
+  acc += score[key];
+  return acc;
+}, 0);
+
+const getLastGameTotalScore = (data) => {
   return `<tr>
-    <td colspan="5" class="result__total  result__total--final">${Object.keys(data.Score).reduce((acc, key) => {
-    acc += data.Score[key];
-    return acc;
-  }, 0)}</td>
+    <td colspan="5" class="result__total  result__total--final">${computeScore(data.Score)}</td>
   </tr>`;
+};
+const getPreviousGameTotalScore = (data) => {
+  if (!data.win) {
+    return `   `;
+  }
+  return `<td class="result__total">${computeScore(data.Score)}</td>`;
 };
 const getBonusScore = (data) => {
   return `<tr>
@@ -38,15 +45,45 @@ const getBonusScore = (data) => {
           <td class="result__total">${data.Score.slow}</td>
         </tr>`;
 };
+const getPreviousResults = (results) => {
+  return results.reduce((acc, element, index) => {
+    const win = isUserWin(element);
+    const Stat = {
+      correct: getQuantityCorrectAnswer(element.answers),
+      fast: getQuantityFastAnswer(element.answers),
+      slow: getQuantitySlowAnswer(element.answers),
+      life: element.life
+    };
+    const Score = {
+      correct: Stat.correct * Point.CORRECT,
+      fast: Stat.fast * Point.FAST,
+      slow: Stat.slow * Point.SLOW,
+      life: Stat.life * Point.LIFE
+    };
+    acc += `<table class="result__table">
+      <tr>
+        <td class="result__number">${index + 2}.</td>
+        <td>
+          <ul class="stats">
+          ${getStats(element.answers)}
+          </ul>
+        </td>
+        ${getPreviousGameTotalScore({win, Score})}
+        <td class="result__total  result__total--final">${getGameStatus(win)}</td>
+      </tr>
+    </table>`;
+    return acc;
+  }, ``);
+};
 const getGameStatus = (win) => {
-  return win ? `WIN!` : `FAIL`;
+  return win ? `WIN` : `FAIL`;
 };
 const getGameStateScore = (Score, win) => {
   return win ? Score.correct : `FAIL`;
 };
 const getGameResult = (data) => {
   if (data.win) {
-    return `${getBonusScore(data)} ${getTotalScore(data)}`;
+    return `${getBonusScore(data)} ${getLastGameTotalScore(data)}`;
   }
   return ``;
 };
@@ -65,8 +102,17 @@ const getQuantitySlowAnswer = (answers) => {
     return answer.status === `correct` && answer.time > TimeLimit.SLOW;
   }).length;
 };
-const isUserWin = (games) => {
-  return games === QUANTITY_GAMES;
+const isUserWin = (data) => {
+  if (data.life > 0) {
+    return true;
+  }
+  if (data.answers.some((answer) => answer.status === `unknown`)) {
+    return false;
+  }
+  if (data.answers.filter((answer) => answer.status === `wrong`) > 4) {
+    return false;
+  }
+  return true;
 };
 
 const Point = {
@@ -76,18 +122,19 @@ const Point = {
   LIFE: 50
 };
 
-export default class StatsView extends AbstractView {
+export default class StatsView extends AbstractViewBackExtendtion {
   constructor(model) {
     super();
-    this.data = model;
+    this.response = model;
   }
   get template() {
-    const win = isUserWin(this.data.gameState.games);
+    const lastStats = this.response[this.response.length - 1];
+    const win = isUserWin(lastStats);
     const Stat = {
-      correct: getQuantityCorrectAnswer(this.data.gameState.answers),
-      fast: getQuantityFastAnswer(this.data.gameState.answers),
-      slow: getQuantitySlowAnswer(this.data.gameState.answers),
-      life: this.data.gameState.life
+      correct: getQuantityCorrectAnswer(lastStats.answers),
+      fast: getQuantityFastAnswer(lastStats.answers),
+      slow: getQuantitySlowAnswer(lastStats.answers),
+      life: lastStats.life
     };
     const Score = {
       correct: Stat.correct * Point.CORRECT,
@@ -113,17 +160,17 @@ export default class StatsView extends AbstractView {
               <tr>
                 <td class="result__number">1.</td>
                 <td colspan="2">
-                  ${getStats(this.data.gameState.answers)}
+                  ${getStats(lastStats.answers)}
                 </td>
                 <td class="result__Points">× 100</td>
                 <td class="result__total">${getGameStateScore(Score, win)}</td>
               </tr>
               ${getGameResult({Score, Stat, Point, win})}
             </table>
+            ${getPreviousResults(this.response.slice(0, this.response.length - 1))}
           </section>`;
   }
-  onBack() {}
   bind() {
-    this._element.querySelector(`.back`).addEventListener(`click`, this.onBack);
+    this.bindBack();
   }
 }
