@@ -20,6 +20,7 @@ export default class Game2View extends GameAbstractView {
   }
   onAnswer() {}
   bind() {
+    super.bind();
     const gameContent = this._element.querySelector(`.game__content`);
     gameContent.addEventListener(`click`, (evt) => {
       if (evt.target.type !== `radio`) {
@@ -27,6 +28,5 @@ export default class Game2View extends GameAbstractView {
       }
       this.onAnswer(this.answers);
     });
-    this.bindBack();
   }
 }

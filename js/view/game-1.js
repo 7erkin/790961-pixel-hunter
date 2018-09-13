@@ -21,6 +21,7 @@ export default class Game1View extends GameAbstractView {
     });
   }
   bind() {
+    super.bind();
     const gameContent = this._element.querySelector(`.game__content`);
     const questionQuantity = gameContent.querySelectorAll(`.game__option`).length;
     const radioNodes = gameContent.querySelectorAll(`input[type="radio"]`);
@@ -42,6 +43,5 @@ export default class Game1View extends GameAbstractView {
         this.onAnswer(newAnswers);
       }
     });
-    this.bindBack();
   }
 }

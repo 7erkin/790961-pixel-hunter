@@ -10,6 +10,9 @@ class ErrorLoad extends AbstractView {
           </div>
         </section>`;
   }
+  show() {
+    document.body.innerHTML = this.element;
+  }
 }
 
 export default new ErrorLoad();

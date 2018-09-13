@@ -170,7 +170,4 @@ export default class StatsView extends AbstractViewBackExtendtion {
             ${getPreviousResults(this.response.slice(0, this.response.length - 1))}
           </section>`;
   }
-  bind() {
-    this.bindBack();
-  }
 }

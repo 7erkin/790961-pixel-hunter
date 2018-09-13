@@ -7,12 +7,12 @@ export default class Game3View extends AbstractViewBackExtendtion {
   }
   onAnswer() {}
   bind() {
+    super.bind();
     const gameContent = this._element.querySelector(`.game__content`);
     gameContent.addEventListener(`click`, (evt) => {
       if (isImageClicked(evt)) {
         this.onAnswer(evt.target.src);
       }
     });
-    this.bindBack();
   }
 }

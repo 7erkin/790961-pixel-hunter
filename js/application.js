@@ -73,7 +73,7 @@ export default class Application {
     changeScreen(game.element);
   }
   static showStats() {
-    fetch(Url.SEND_RESULT + gameModel.gameState.userName, {
+    fetch(`${Url.SEND_RESULT}${gameModel.gameState.userName}`, {
       method: `POST`,
       headers: {
         'Content-Type': `application/json`
@@ -83,21 +83,14 @@ export default class Application {
         life: gameModel.gameState.life
       })
     }).
-      then(() => {
-        return fetch(Url.GET_STATS + gameModel.gameState.userName);
-      }).
-      then((response) => {
-        return response.json();
-      }).
+      then(() => fetch(`${Url.GET_STATS}${gameModel.gameState.userName}`)).
+      then((response) => response.json()).
       then((response) => {
         const stats = new StatsScreen({
           showIntro: Application.showIntro
         }, gameModel, response);
         stats.init();
         changeScreen(stats.element);
-      }).
-      catch(() => {
-        changeScreen(errorLoad.element);
-      });
+      }).catch(() => errorLoad.show());
   }
 }
