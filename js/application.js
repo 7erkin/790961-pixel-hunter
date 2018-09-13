@@ -86,9 +86,7 @@ export default class Application {
       then(() => fetch(`${Url.GET_STATS}${gameModel.gameState.userName}`)).
       then((response) => response.json()).
       then((response) => {
-        const stats = new StatsScreen({
-          showIntro: Application.showIntro
-        }, gameModel, response);
+        const stats = new StatsScreen(gameModel, response);
         stats.init();
         changeScreen(stats.element);
       }).catch(() => errorLoad.show());

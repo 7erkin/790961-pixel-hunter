@@ -125,10 +125,10 @@ const Point = {
 export default class StatsView extends AbstractViewBackExtendtion {
   constructor(model) {
     super();
-    this.response = model;
+    this._response = model;
   }
   get template() {
-    const lastStats = this.response[this.response.length - 1];
+    const lastStats = this._response[this._response.length - 1];
     const win = isUserWin(lastStats);
     const Stat = {
       correct: getQuantityCorrectAnswer(lastStats.answers),
@@ -167,7 +167,7 @@ export default class StatsView extends AbstractViewBackExtendtion {
               </tr>
               ${getGameResult({Score, Stat, Point, win})}
             </table>
-            ${getPreviousResults(this.response.slice(0, this.response.length - 1))}
+            ${getPreviousResults(this._response.slice(0, this._response.length - 1))}
           </section>`;
   }
 }

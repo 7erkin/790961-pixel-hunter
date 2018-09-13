@@ -13,27 +13,27 @@ const notifyAll = (listeners, arg) => {
 
 export default class Timer {
   constructor(gameState) {
-    this.gameState = gameState;
-    this.answerTime = gameState.time;
-    this.listeners = new Map();
+    this._gameState = gameState;
+    this._answerTime = gameState.time;
+    this._listener = new Map();
   }
   subscribe(eventName, listener) {
-    this.listeners.set(eventName, listener);
+    this._listener.set(eventName, listener);
   }
   start() {
-    this.timerId = setInterval(() => {
-      --this.gameState.time;
-      if (isTimeOver(this.gameState.time)) {
-        notifyAll(this.listeners.get(TimerEventName.END), AnswerStatus.WRONG);
+    this._timerId = setInterval(() => {
+      --this._gameState.time;
+      if (isTimeOver(this._gameState.time)) {
+        notifyAll(this._listener.get(TimerEventName.END), AnswerStatus.WRONG);
         return;
       }
-      notifyAll(this.listeners.get(TimerEventName.CHANGE), this.gameState.time);
+      notifyAll(this._listener.get(TimerEventName.CHANGE), this._gameState.time);
     }, ONE_SECOND);
   }
   stop() {
-    clearInterval(this.timerId);
+    clearInterval(this._timerId);
   }
   get time() {
-    return -this.gameState.time + this.answerTime;
+    return -this._gameState.time + this._answerTime;
   }
 }

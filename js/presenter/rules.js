@@ -2,18 +2,18 @@ import RulesView from '../view/rules';
 
 export default class RulesScreen {
   constructor(callback, model) {
-    this.callback = callback;
-    this.model = model;
+    this._callback = callback;
+    this._model = model;
   }
   init() {
-    this.view = new RulesView();
-    this.view.onClick = (userName) => {
-      this.model.gameState.userName = userName;
-      this.callback.showGame();
+    this._view = new RulesView();
+    this._view.onClick = (userName) => {
+      this._model.gameState.userName = userName;
+      this._callback.showGame();
     };
-    this.view.onBack = this.callback.showIntro;
+    this._view.onBack = this._callback.showIntro;
   }
   get element() {
-    return this.view.element;
+    return this._view.element;
   }
 }

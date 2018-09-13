@@ -4,5 +4,6 @@ export const AnswerStatus = {
 };
 export const TimerEventName = {
   CHANGE: `timeChange`,
+  FLASH: `timeFlash`,
   END: `timeEnd`
 };

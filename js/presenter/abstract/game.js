@@ -41,43 +41,43 @@ const handleAnswer = (data) => {
   data.model.setAnswer(AnswerType.WRONG);
 };
 
-const EventName = {
+const GameEventName = {
   NEXT_GAME: `nextGame`,
   END_GAME: `endGame`,
   TO_INTRO: `toIntro`,
-  Time: {
-    CHANGE: `timeChange`,
-    END: `timeEnd`,
-  }
+  TIME_CHANGE: `timeChange`,
 };
 
 export default class GameScreen {
   constructor(View, callback, model, typeGame) {
-    this.question = questionStorage.getQuestionByType(typeGame);
-    this.view = new View(model, this.question);
-    this.model = model;
-    this.callback = callback;
-    this.typeGame = typeGame;
+    this._question = questionStorage.getQuestionByType(typeGame);
+    this._view = new View(model, this._question);
+    this._model = model;
+    this._callback = callback;
+    this._typeGame = typeGame;
   }
   init() {
-    this.model.init();
-    this.model.subscribe(EventName.NEXT_GAME, this.callback.showNextGame);
-    this.model.subscribe(EventName.END_GAME, this.callback.showStats);
-    this.model.subscribe(EventName.TO_INTRO, this.callback.showIntro);
-    this.model.subscribe(EventName.Time.CHANGE, this.view.updateTime.bind(this.view));
-    this.view.onAnswer = (answers) => {
+    this._model.init();
+    this._model.subscribe(GameEventName.NEXT_GAME, this._callback.showNextGame);
+    this._model.subscribe(GameEventName.END_GAME, this._callback.showStats);
+    this._model.subscribe(GameEventName.TO_INTRO, this._callback.showIntro);
+    this._model.subscribe(GameEventName.TIME_CHANGE, this._view.updateTime.bind(this._view));
+    this._model.subscribe(GameEventName.NEXT_GAME, this._view.destruct.bind(this._view));
+    this._model.subscribe(GameEventName.END_GAME, this._view.destruct.bind(this._view));
+    this._model.subscribe(GameEventName.TO_INTRO, this._view.destruct.bind(this._view));
+    this._view.onAnswer = (answers) => {
       handleAnswer({
         answers,
-        question: this.question,
-        model: this.model,
-        typeGame: this.typeGame
+        question: this._question,
+        model: this._model,
+        typeGame: this._typeGame
       });
     };
-    this.view.onBack = () => {
-      this.model.flushGame();
+    this._view.onBack = () => {
+      this._model.flushGame();
     };
   }
   get element() {
-    return this.view.element;
+    return this._view.element;
   }
 }

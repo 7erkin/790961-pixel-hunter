@@ -2,13 +2,13 @@ import GreetingView from '../view/greeting';
 
 export default class GreetingScreen {
   constructor(callback) {
-    this.callback = callback;
+    this._callback = callback;
   }
   init() {
-    this.view = new GreetingView();
-    this.view.onClick = this.callback;
+    this._view = new GreetingView();
+    this._view.onClick = this._callback;
   }
   get element() {
-    return this.view.element;
+    return this._view.element;
   }
 }

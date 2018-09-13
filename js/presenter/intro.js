@@ -2,13 +2,13 @@ import IntroView from '../view/intro';
 
 export default class IntroScreen {
   constructor(callback) {
-    this.callback = callback;
+    this._callback = callback;
   }
   init() {
-    this.view = new IntroView();
-    this.view.onClick = () => this.callback();
+    this._view = new IntroView();
+    this._view.onClick = () => this._callback();
   }
   get element() {
-    return this.view.element;
+    return this._view.element;
   }
 }

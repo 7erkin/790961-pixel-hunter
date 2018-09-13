@@ -1,18 +1,17 @@
 import StatsView from '../view/stats';
 
 export default class StatsScreen {
-  constructor(callback, model, response) {
-    this.callback = callback;
-    this.model = model;
-    this.response = response;
+  constructor(model, response) {
+    this._model = model;
+    this._response = response;
   }
   init() {
-    this.view = new StatsView(this.response);
-    this.view.onBack = () => {
-      this.model.flushGame();
+    this._view = new StatsView(this._response);
+    this._view.onBack = () => {
+      this._model.flushGame();
     };
   }
   get element() {
-    return this.view.element;
+    return this._view.element;
   }
 }
