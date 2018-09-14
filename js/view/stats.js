@@ -127,6 +127,9 @@ export default class StatsView extends AbstractViewBackExtendtion {
     super();
     this._response = model;
   }
+  bind() {
+    this._element.querySelector(`.back`).addEventListener(`click`, this.onBack);
+  }
   get template() {
     const lastStats = this._response[this._response.length - 1];
     const win = isUserWin(lastStats);
