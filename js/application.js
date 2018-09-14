@@ -25,7 +25,7 @@ export default class Application {
       then((response) => {
         questionStorage.init(response);
         Application.showIntro();
-      });
+      }).catch(() => errorLoad.show());
   }
   static showIntro() {
     const intro = new IntroScreen(Application.showGreeting);

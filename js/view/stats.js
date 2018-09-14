@@ -6,7 +6,7 @@ const TimeLimit = {
   SLOW: 20
 };
 
-const computeScore = (score) => Object.keys(score).reduce((acc, key) => {
+export const computeScore = (score) => Object.keys(score).reduce((acc, key) => {
   acc += score[key];
   return acc;
 }, 0);

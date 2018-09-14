@@ -11,7 +11,8 @@ class ErrorLoad extends AbstractView {
         </section>`;
   }
   show() {
-    document.body.innerHTML = this.element;
+    document.body.innerHTML = ``;
+    document.body.appendChild(this.element);
   }
 }
 
